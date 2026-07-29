@@ -1,4 +1,4 @@
-# Frontend — Arbitrage Trading Platform
+# Frontend — Arbitrage Scanner Platform
 
 React + TypeScript веб-приложение для отслеживания арбитражных возможностей на криптовалютных биржах.
 
