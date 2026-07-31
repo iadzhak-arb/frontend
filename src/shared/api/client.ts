@@ -1,5 +1,6 @@
 import createClient, {type Middleware} from "openapi-fetch"
 import {type paths} from "./schema.ts";
+import {type paths as authPaths} from "./schema-auth.ts"
 
 const baseUrl = import.meta.env.VITE_BASE_URL || '';
 
@@ -59,7 +60,7 @@ const authMiddleware: Middleware = {
     }
 }
 
-export const client = createClient<paths>({
+export const client = createClient<paths | authPaths>({
     baseUrl: baseUrl,
     credentials: 'include'
 });

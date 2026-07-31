@@ -17,7 +17,7 @@ type Register = {
 export function useRegistration() {
     return useMutation({
         mutationFn: async (data: Register) => {
-            return await client.POST('/api/auth/registration/', {body: data as any})
+            return await client.POST('/api/users/registration', {body: data as any})
         }
     })
 }
@@ -27,7 +27,7 @@ export function useLogin() {
     const navigate = useNavigate();
     return useMutation({
         mutationFn: async (data: Login) => {
-            return await client.POST('/api/auth/login/', {body: data as any});
+            return await client.POST('/api/users/login', {body: data as any});
         },
         onSuccess: async () => {
             queryClient.resetQueries({queryKey: ['user']});
@@ -46,7 +46,7 @@ export function useUser() {
         queryKey: ['user'],
         queryFn: async () => {
             try {
-                const {data} = await client.GET('/api/auth/user/');
+                const {data} = await client.GET('/api/users/me');
                 return data;
             } catch (error: any) {
                 // Если 401 - не авторизован, сбрасываем кэш
@@ -67,7 +67,7 @@ export function useLogout() {
     const navigate = useNavigate();
     return useMutation({
         mutationFn: async () => {
-            return await client.POST('/api/auth/logout/');
+            return await client.POST('/api/users/logout');
         },
         onSuccess: async () => {
             queryClient.resetQueries({queryKey: ['user']});
