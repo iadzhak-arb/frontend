@@ -3,7 +3,7 @@ import NavbarBreadcrumbs from './NavbarBreadcrumbs.tsx';
 import {ColorModeIconDropdown} from '@shared/theme';
 import IconButton from "@mui/material/IconButton";
 import LogoutIcon from '@mui/icons-material/Logout';
-import {useLogout} from "@features/user/auth.ts";
+import {useLogout} from "@features/auth/useLogout.ts";
 import {useNavigate} from "@tanstack/react-router";
 
 

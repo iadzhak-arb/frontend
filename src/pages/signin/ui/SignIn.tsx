@@ -10,7 +10,7 @@ import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import ForgotPassword from './ForgotPassword.tsx';
-import {useLogin} from "@features/user/auth.ts";
+import {useLogin} from "@features/auth/useLogin.ts";
 import {Link as RouterLink} from "@tanstack/react-router";
 
 

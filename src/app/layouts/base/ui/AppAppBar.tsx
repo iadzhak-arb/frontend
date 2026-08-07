@@ -4,7 +4,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import {ColorModeIconDropdown} from '@shared/theme'
 import {SitemarkIcon} from '@shared/ui';
-import {useUser} from "@features/user/auth.ts";
+import {useUser} from "@features/auth/useUser.ts";
 import {menu} from "@shared/config.ts"
 import {useState} from "react";
 import {ButtonDashboard, ButtonLogout, ButtonSignIn, ButtonSignUp} from "./UserButtons.tsx";

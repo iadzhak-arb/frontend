@@ -1,5 +1,5 @@
 import {useMutation,} from "@tanstack/react-query";
-import {client} from "@shared/api";
+import {authClient} from "@shared/api";
 
 type ChangePasswordInput = {
     new_password1: string;
@@ -9,7 +9,7 @@ type ChangePasswordInput = {
 export function useChangePassword() {
     return useMutation({
         mutationFn: async (input: ChangePasswordInput) => (
-            await client.POST('/api/auth/password/change/', {
+            await authClient.POST('/api/auth/password/change/', {
                 body: input as any
             })
         )

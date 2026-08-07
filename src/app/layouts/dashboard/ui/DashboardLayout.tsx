@@ -5,7 +5,7 @@ import AppNavbar from './AppNavbar.tsx';
 import Header from './Header.tsx';
 import SideMenu from './SideMenu.tsx';
 import {Outlet, useNavigate} from "@tanstack/react-router";
-import {useUser} from "@features/user/auth.ts";
+import {useUser} from "@features/auth/useUser.ts";
 
 
 export function DashboardLayout() {

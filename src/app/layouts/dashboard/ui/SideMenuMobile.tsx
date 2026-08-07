@@ -5,7 +5,8 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import MenuContent from './MenuContent.tsx';
-import {useLogout, useUser} from "@features/user/auth.ts";
+import {useUser} from "@features/auth/useUser.ts";
+import {useLogout} from "@features/auth/useLogout.ts";
 import PersonIcon from '@mui/icons-material/Person';
 
 interface SideMenuMobileProps {

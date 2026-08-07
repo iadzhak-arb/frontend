@@ -11,7 +11,7 @@ import {
     Typography
 } from '@mui/material';
 import {Link as RouterLink, useNavigate} from "@tanstack/react-router"
-import {useRegistration} from "@features/user/auth.ts";
+import {useRegistration} from "@features/auth/useRegistration.ts";
 import type {ApiError} from "@shared/api/client.ts";
 import type {SyntheticEvent} from "react";
 import {useValidation} from "../model/validation.ts";

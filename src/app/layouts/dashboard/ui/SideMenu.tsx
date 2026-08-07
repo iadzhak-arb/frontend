@@ -7,7 +7,7 @@ import {SitemarkIcon} from "@shared/ui";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import OptionsMenu from "./OptionsMenu.tsx";
-import {useUser} from "@features/user/auth.ts";
+import {useUser} from "@features/auth/useUser.ts";
 import PersonIcon from '@mui/icons-material/Person';
 
 const drawerWidth = 240;

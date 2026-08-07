@@ -1,4 +1,4 @@
-import {useUser} from "@features/user/auth.ts";
+import {useUser} from "@features/auth/useUser.ts";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
