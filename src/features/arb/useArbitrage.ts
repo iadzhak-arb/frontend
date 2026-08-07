@@ -1,39 +1,10 @@
 import {keepPreviousData, useQuery} from "@tanstack/react-query";
-import {client} from "@shared/api";
-import {type operations} from "@shared/api"
+import {arbClient} from "@shared/api";
+import {type operations} from "@shared/api/schema-arb"
 import {useEffect, useState} from "react";
 
-export function useMarkets() {
-    return useQuery({
-        queryKey: ['markets'],
-        queryFn: async () => {
-            const {data} = await client.GET('/api/markets/');
-            return data;
-        }
-    })
-}
 
-export function useExchanges() {
-    return useQuery({
-        queryKey: ['exchanges'],
-        queryFn: async () => {
-            const {data} = await client.GET('/api/exchanges/');
-            return data;
-        }
-    })
-}
-
-export function useTokens(t: 'base' | 'quote' | 'settle') {
-    return useQuery({
-        queryKey: ['tokens', t],
-        queryFn: async () => {
-            const {data} = await client.GET(`/api/tokens/${t}/`);
-            return data;
-        }
-    })
-}
-
-export type Params = operations['arbitrage_latest_list']['parameters']['query'];
+export type Params = operations['latest_latest_get']['parameters']['query'];
 const filtersStorage = 'arbitrage-filters';
 
 
@@ -51,7 +22,7 @@ export function useArbitrage(initial?: Params) {
     const {data, isFetching} = useQuery({
         queryKey: ['arbitrage', params],
         queryFn: async () => {
-            const {data} = await client.GET('/api/arbitrage/latest/', {
+            const {data} = await arbClient.GET('/latest', {
                 params: {
                     query: params
                 },
@@ -64,7 +35,7 @@ export function useArbitrage(initial?: Params) {
 
     const setPage = (v: number) => setParams({...params, page: v});
     const setLimit = (v: number) => setParams({...params, limit: v, page: 1});
-    const setToken = (v: string[]) => setParams({...params, token: v.join(), page: 1});
+    const setToken = (v: string[]) => setParams({...params, tokens: v.join(), page: 1});
     const setMarketBuy = (v: string) => setParams({...params, market_buy: v, page: 1});
     const setMarketSell = (v: string) => setParams({...params, market_sell: v, page: 1});
     const setMargin = (v: number[]) => setParams({...params, margin_min: v[0], margin_max: v[1], page: 1});

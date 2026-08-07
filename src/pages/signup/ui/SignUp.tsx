@@ -1,124 +1,93 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
-import Divider from '@mui/material/Divider';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormLabel from '@mui/material/FormLabel';
-import FormControl from '@mui/material/FormControl';
-import Link from '@mui/material/Link';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
+import {
+    Box,
+    Button,
+    Checkbox,
+    Divider,
+    FormControlLabel,
+    FormLabel,
+    FormControl,
+    Link,
+    TextField,
+    Typography
+} from '@mui/material';
 import {Link as RouterLink, useNavigate} from "@tanstack/react-router"
-import {useLogin, useRegistration} from "@features/user/auth.ts";
+import {useRegistration} from "@features/user/auth.ts";
 import type {ApiError} from "@shared/api/client.ts";
 import type {SyntheticEvent} from "react";
+import {useValidation} from "../model/validation.ts";
 
+
+const Agreement = ({rule, handleCheckedRule, ruleErrorMessage}) => {
+    const label = (
+        <Typography variant="caption" sx={{mt: 1}}>
+            Нажимая кнопку 'Зарегистрироваться', я даю своё согласие
+            на <Link target="_blank">обработку персональных данных</Link> и
+            принимаю условия <Link target="_blank">публичной оферты</Link>.
+        </Typography>
+    )
+    return (
+        <>
+            <FormControlLabel
+                control={<Checkbox checked={rule} onChange={handleCheckedRule} color="primary"/>}
+                label={label}
+                sx={{alignItems: 'flex-start'}}
+            />
+            {ruleErrorMessage && <Typography variant="caption" color="error">{ruleErrorMessage}</Typography>}
+        </>
+    )
+}
 
 export function SignUp() {
-    const [emailError, setEmailError] = React.useState(false);
-    const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
-    const [passwordError, setPasswordError] = React.useState(false);
-    const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
-    const [password2Error, setPassword2Error] = React.useState(false);
-    const [password2ErrorMessage, setPassword2ErrorMessage] = React.useState('');
-    const [nameError, setNameError] = React.useState(false);
-    const [nameErrorMessage, setNameErrorMessage] = React.useState('');
-    const [error, setError] = React.useState('');
+    const {
+        emailError,
+        emailErrorMessage,
+        password2Error,
+        password2ErrorMessage,
+        passwordError,
+        passwordErrorMessage,
+        rule,
+        ruleErrorMessage,
+        error,
+        setError,
+        setPasswordError,
+        setPasswordErrorMessage,
+        setEmailError,
+        setEmailErrorMessage,
+        handleCheckedRule,
+        validateInputs
 
+    } = useValidation();
     const registration = useRegistration();
-    const login = useLogin();
     const navigate = useNavigate();
 
-    const validateInputs = () => {
-        const email = document.getElementById('email') as HTMLInputElement;
-        const password = document.getElementById('password') as HTMLInputElement;
-        const password2 = document.getElementById('password2') as HTMLInputElement;
-        const name = document.getElementById('name') as HTMLInputElement;
-
-        let isValid = true;
-
-        if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
-            setEmailError(true);
-            setEmailErrorMessage('Неккоректный формат email.');
-            isValid = false;
-        } else {
-            setEmailError(false);
-            setEmailErrorMessage('');
-        }
-
-        if (!password.value || password.value.length < 8) {
-            setPasswordError(true);
-            setPasswordErrorMessage('Минимальная длина пароля 8 знаков.');
-            isValid = false;
-        } else {
-            setPasswordError(false);
-            setPasswordErrorMessage('');
-        }
-
-        if (password.value != password2.value) {
-            setPassword2Error(true);
-            setPassword2ErrorMessage('Пароли не совпадают.');
-            isValid = false;
-        } else {
-            setPassword2Error(false);
-            setPassword2ErrorMessage('');
-        }
-
-
-        if (!name.value || name.value.length < 1) {
-            setNameError(true);
-            setNameErrorMessage('Обязательное поле.');
-            isValid = false;
-        } else {
-            setNameError(false);
-            setNameErrorMessage('');
-        }
-
-
-        return isValid;
-    };
 
     const handleSubmit = (event: SyntheticEvent<HTMLFormElement>) => {
         event.preventDefault();
-        if (nameError || emailError || passwordError || password2Error) {
+        if (!rule || emailError || passwordError || password2Error) {
             return;
         }
         const form = new FormData(event.currentTarget);
         const data = {
-            first_name: form.get('name') as string,
+            first_name: form.get('first_name') as string,
+            last_name: form.get('last_name') as string,
             email: form.get('email') as string,
-            password1: form.get('password') as string,
-            password2: form.get('password2') as string
+            password: form.get('password') as string,
         };
         registration.mutate(data, {
             onSuccess: () => {
-                login.mutate({
-                    email: data.email,
-                    password: data.password1
-                }, {
-                    onSuccess: () => navigate({to: '/'})
-                })
-
+                navigate({to: '/signin'})
             },
             onError: (error) => {
                 const apiError = error as unknown as ApiError;
-                setError(apiError?.data?.non_field_errors)
-                if (apiError?.data?.email) {
+                console.log(apiError);
+                setError(apiError?.data?.detail.non_fields)
+                if (apiError?.data?.detail.email) {
                     setEmailError(true)
-                    setEmailErrorMessage(apiError.data.email)
+                    setEmailErrorMessage(apiError.data.detail.email)
                 }
-                if (apiError?.data?.password1) {
+                if (apiError?.data?.detail.password) {
                     setPasswordError(true)
-                    setPasswordErrorMessage(apiError.data.password1)
-                }
-                if (apiError?.data?.password2) {
-                    setPassword2Error(true)
-                    setPassword2ErrorMessage(apiError.data.password2)
-                }
-                if (apiError?.data?.first_name) {
-                    setNameError(true)
-                    setNameErrorMessage(apiError.data.first_name)
+                    setPasswordErrorMessage(apiError.data.detail.password)
                 }
                 return;
             }
@@ -140,23 +109,28 @@ export function SignUp() {
                 sx={{display: 'flex', flexDirection: 'column', gap: 2}}
             >
                 <FormControl>
-                    <FormLabel htmlFor="name">Имя</FormLabel>
+                    <FormLabel htmlFor="first_name">Имя</FormLabel>
                     <TextField
                         autoComplete="name"
-                        name="name"
-                        required
+                        name="first_name"
                         fullWidth
-                        id="name"
+                        id="first_name"
                         placeholder="John"
-                        error={nameError}
-                        helperText={nameErrorMessage}
-                        color={nameError ? 'error' : 'primary'}
                     />
                 </FormControl>
                 <FormControl>
+                    <FormLabel htmlFor="last_name">Фамилия</FormLabel>
+                    <TextField
+                        autoComplete="family-name"
+                        name="last_name"
+                        fullWidth
+                        id="last_name"
+                        placeholder="Smith"
+                    />
+                </FormControl>
+                <FormControl required>
                     <FormLabel htmlFor="email">Email</FormLabel>
                     <TextField
-                        required
                         fullWidth
                         id="email"
                         placeholder="your@email.com"
@@ -168,7 +142,7 @@ export function SignUp() {
                         color={passwordError ? 'error' : 'primary'}
                     />
                 </FormControl>
-                <FormControl>
+                <FormControl required>
                     <FormLabel htmlFor="password">Пароль</FormLabel>
                     <TextField
                         required
@@ -184,7 +158,7 @@ export function SignUp() {
                         color={passwordError ? 'error' : 'primary'}
                     />
                 </FormControl>
-                <FormControl>
+                <FormControl required>
                     <FormLabel htmlFor="password2">Повторите пароль</FormLabel>
                     <TextField
                         required
@@ -201,10 +175,7 @@ export function SignUp() {
                     />
                 </FormControl>
                 {error && <Typography variant="caption" color="error">{error}</Typography>}
-                <FormControlLabel
-                    control={<Checkbox value="allowExtraEmails" color="primary"/>}
-                    label="Получать информацию об обновлениях по почте."
-                />
+                <Agreement ruleErrorMessage={ruleErrorMessage} rule={rule} handleCheckedRule={handleCheckedRule}/>
                 <Button
                     type="submit"
                     fullWidth
@@ -224,7 +195,7 @@ export function SignUp() {
                         variant="body2"
                         sx={{alignSelf: 'center'}}
                         component={RouterLink}
-                        to={'/auth/'}
+                        to={'/signin'}
                     >
                         Войти
                     </Link>

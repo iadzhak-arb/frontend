@@ -1,13 +1,10 @@
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import Stack from "@mui/material/Stack";
-import {Skeleton} from "@mui/material";
+import {Accordion, AccordionSummary, AccordionDetails, Stack, Skeleton} from "@mui/material";
 import {SelectOne} from "@shared/ui";
-import {useExchanges, useMarkets} from "../api/data.ts";
+import {useMarkets} from "@features/arb/useMarkets";
 import {SelectMultiple} from "@shared/ui/SelectMultiple.tsx";
 import {useId} from "react";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import {useExchanges} from "@features/arb/useExchanges.ts";
 
 type Props = {
     name: string;

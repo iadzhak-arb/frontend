@@ -1,9 +1,9 @@
 import {useQuery} from "@tanstack/react-query";
-import {client} from "@shared/api";
+import {arbClient} from "@shared/api";
 
 export function useSummary() {
     return useQuery({
         queryKey: ['summary'],
-        queryFn: async () => await client.GET('/api/summary/')
+        queryFn: async () => await arbClient.GET('/summary')
     })
 }

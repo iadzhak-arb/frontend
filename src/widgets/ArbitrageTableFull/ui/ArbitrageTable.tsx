@@ -5,7 +5,7 @@ import {MobileView} from "./MobileView.tsx";
 import type {ArbitrageTableProps} from "../model/types.ts";
 
 
-export function ArbitrageTable({data, isFetching}: ArbitrageTableProps) {
+export function ArbitrageTable({data, actions = false, isFetching}: ArbitrageTableProps) {
     const [_, setNow] = useState(new Date())
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
@@ -18,8 +18,8 @@ export function ArbitrageTable({data, isFetching}: ArbitrageTableProps) {
     }, [])
 
     if (isMobile) {
-        return <MobileView data={data}/>
+        return <MobileView actions={actions} data={data}/>
     }
-    return <View data={data} isFetching={isFetching}/>
+    return <View actions={actions} data={data} isFetching={isFetching}/>
 }
 

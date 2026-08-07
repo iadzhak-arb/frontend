@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "api": "npx openapi-typescript http://127.0.0.1:8000/api/schema/ -o src/shared/api/schema.ts",
-    "api-auth": "npx openapi-typescript http://127.0.0.1:8000/api/auth/openapi.json -o src/shared/api/schema-auth.ts"
+    "api-auth": "npx openapi-typescript http://localhost/api/auth/openapi.json -o src/shared/api/schema-auth.ts",
+    "api-arb": "npx openapi-typescript http://localhost/api/arb/openapi.json -o src/shared/api/schema-arb.ts"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

@@ -40,13 +40,11 @@ export function SignIn() {
         mutate({
             email: data.get('email') as string,
             password: data.get('password') as string,
+            remember: !!data.get('remember') as boolean
         }, {
-            onSuccess: () => {
-                // navigate уже внутри useLogin
-            },
             onError: (error: any) => {
                 // Обработка ошибок логина
-                const errorMessage = error?.response?.data?.non_field_errors || 'Некорректные данные';
+                const errorMessage = error?.data?.detail || 'Ошибка входаы';
                 setError(errorMessage);
             }
         })
@@ -137,7 +135,10 @@ export function SignIn() {
                 </FormControl>
                 {error && <Typography variant="caption" color="error">{error}</Typography>}
                 <FormControlLabel
-                    control={<Checkbox value="remember" color="primary"/>}
+                    control={<Checkbox value="remember" color="primary"
+                    />}
+                    id="remember"
+                    name="remember"
                     label="Запомнить"
                 />
                 <ForgotPassword open={open} handleClose={handleClose}/>

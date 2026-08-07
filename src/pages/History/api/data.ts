@@ -1,60 +1,52 @@
 import {useState} from "react";
 import {useQuery} from "@tanstack/react-query";
-import {client} from "@shared/api";
+import {arbClient} from "@shared/api";
+import {type operations} from "@shared/api/schema-arb.ts"
 
-export function useArbitrageNames() {
-    const [search, setSearch] = useState('');
-    const {data} = useQuery({
-        queryKey: ['arb_available', search],
-        queryFn: async () => {
-            const {data} = await client.GET('/api/arbitrage/', {
-                params: {
-                    query: {
-                        search: search
-                    }
-                }
-            });
-            return data?.results
-        }
-    })
 
-    return {
-        setSearch,
-        data
-    }
-}
+type Params = operations['history_history_get']['parameters']['query']
 
 export function useHistory() {
-    const [id, setId] = useState(1);
-    if (!id) return {open: undefined, close: undefined, setId};
-    const open = useQuery({
-        queryKey: ['history', id],
-        queryFn: async () => {
-            if (!id) return;
-            const {data} = await client.GET('/api/arbitrage/{id}/', {
-                params: {
-                    path: {id}
-                }
-            });
-            return data
-        }
+    const [params, setParams] = useState<Params>({
+        buy_symbol_id: 'BTC/USDT',
+        buy_exchange_name: 'Bybit',
+        sell_symbol_id: 'BTC/USDT',
+        sell_exchange_name: 'Bybit',
     })
-    const close = useQuery({
-        queryKey: ['history_back', id],
+
+    const setSymbolBuy = (v: string) => setParams(prev => ({...prev, buy_symbol_id: v}));
+    const setExchangeBuy = (v: string) => setParams(prev => ({...prev, buy_exchange_name: v}));
+    const setSymbolSell = (v: string) => setParams(prev => ({...prev, sell_symbol_id: v}));
+    const setExchangeSell = (v: string) => setParams(prev => ({...prev, sell_exchange_name: v}));
+
+    if (!params) return {
+        data: undefined,
+        params,
+        setParams,
+        setSymbolBuy,
+        setExchangeBuy,
+        setSymbolSell,
+        setExchangeSell
+    };
+    const data = useQuery({
+        queryKey: ['history', params],
         queryFn: async () => {
-            if (!id) return;
-            const {data} = await client.GET('/api/arbitrage/{id}/back/', {
+            if (!params) return;
+            const {data} = await arbClient.GET('/history', {
                 params: {
-                    path: {id}
+                    query: params
                 }
             });
             return data
         }
     })
     return {
-        open,
-        close,
-        setId,
-        id
+        data,
+        params,
+        setSymbolBuy,
+        setExchangeBuy,
+        setSymbolSell,
+        setExchangeSell,
+        setParams
     }
 }

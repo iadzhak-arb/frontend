@@ -72,7 +72,7 @@ export default function AppAppBar() {
                         {
                             user.data &&
                             <>
-                                <Typography variant="caption" color="textDisabled">{user.data.email}</Typography>
+                                <Typography variant="caption" color="textDisabled">{user.data?.email}</Typography>
                                 <ButtonLogout/>
                                 <ButtonDashboard/>
                             </>

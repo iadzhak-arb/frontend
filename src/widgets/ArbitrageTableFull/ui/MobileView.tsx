@@ -16,30 +16,54 @@ export function MobileView({data}: ArbitrageTableProps) {
         <>
             {data ?
                 data.map((item, index) => (
-                    <Card key={index} sx={{mt: 2, pl: 0.5, width: "100%"}}>
+                    <Card
+                        key={index}
+                        sx={{
+                            mt: 2, pl: 0.5, width: "100%",
+                            background: (theme) => `linear-gradient(
+                                                    180deg,
+                                                    ${theme.palette.background.paper} 85%,
+                                                    ${theme.palette.primary.light} 150%
+                                                    )`,
+                        }}>
                         <CardContent>
                             <Stack direction="row" spacing={2} sx={{
                                 justifyContent: "space-between"
                             }}>
                                 <Stack spacing={2} sx={{maxWidth: 100}}>
                                     <Stack direction="row">
-                                        <ArrowDropUpIcon fontSize="small" opacity={0.5} color="success"/><RenderSide
-                                        value={item.buy}
-                                        variant="subtitle1"/>
+                                        <ArrowDropUpIcon fontSize="small" opacity={0.5} color="success"/>
+                                        <RenderSide
+                                            symbol={item.buy_symbol_id}
+                                            exchange={item.buy_exchange_name}
+                                            variant="subtitle1"
+                                        />
                                     </Stack>
                                     <Stack direction="row">
-                                        <ArrowDropDownIcon fontSize="small" opacity={0.5} color="error"/> <RenderSide
-                                        value={item.sell}
-                                        variant="subtitle1"/>
+                                        <ArrowDropDownIcon fontSize="small" opacity={0.5} color="error"/>
+                                        <RenderSide
+                                            symbol={item.sell_symbol_id}
+                                            exchange={item.sell_exchange_name}
+                                            variant="subtitle1"
+                                        />
                                     </Stack>
                                     <RouterLink
                                         to="/d/history"
-                                        search={{id: item.id}}
+                                        search={{
+                                            sell_exchange_name: item.sell_exchange_name,
+                                            buy_exchange_name: item.buy_exchange_name,
+                                            sell_symbol_id: item.sell_symbol_id,
+                                            buy_symbol_id: item.buy_symbol_id
+                                        }}
                                     >
                                         <IconButton
                                             color="error"
                                             size="small"
-                                            sx={{ml: 2}}
+                                            sx={{
+                                                ml: 2,
+                                                borderWidth: 2,
+                                                backgroundColor: (theme) => theme.palette.background.paper
+                                            }}
                                         >
                                             <SsidChartIcon/>
                                         </IconButton>
@@ -48,13 +72,13 @@ export function MobileView({data}: ArbitrageTableProps) {
                                 <Stack sx={{alignItems: "flex-end"}}>
                                     <Typography variant="h3">{item.margin}%</Typography>
                                     <RenderVolume
-                                        symbol={item.buy.symbol}
+                                        symbol={item.buy_symbol_id}
                                         base={item.volume_base}
                                         quote={item.volume_quote}
                                         align="flex-end"
                                     />
                                     <br/>
-                                    <RenderTime value={new Date(item.timestamp)}/>
+                                    <RenderTime value={item.timestamp}/>
                                 </Stack>
                             </Stack>
                         </CardContent>

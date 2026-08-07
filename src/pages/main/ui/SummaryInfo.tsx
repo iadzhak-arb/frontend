@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import {useSummary} from "@pages/MainPage/api/useSummary.ts";
+import {useSummary} from "@features/arb/useSummary.ts";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
@@ -27,7 +27,7 @@ const StatListItem = ({value, title, text}: { value: number, title: string, text
     </ListItem>
 )
 
-export default function Highlights() {
+export default function SummaryInfo() {
     const {data} = useSummary();
     const exchanges = data?.data?.exchanges as number;
     const symbols = data?.data?.symbols as number;
@@ -90,8 +90,8 @@ export default function Highlights() {
                         <StatListItem
                             value={profit_deals}
                             title="Прибыльных связок"
-                            text="Арбитражных связок с положительной маржой доступны прямо сейчас — и
-                            список обновляется в реальном времени."
+                            text="Арбитражных связок с положительной* маржой доступны прямо сейчас — и
+                            список обновляется в реальном времени. *с профитом 0,5 - 100%"
                         />
                         <Divider sx={{mt: 2, mb: 1, display: {xs: 'block', sm: 'none'}}}/>
                         <StatListItem

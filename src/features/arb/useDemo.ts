@@ -1,4 +1,4 @@
-import {client} from "@shared/api";
+import {arbClient} from "@shared/api";
 import {useQuery} from "@tanstack/react-query";
 
 
@@ -7,8 +7,7 @@ export function getDemoSpotSpot() {
         queryKey: ['demo', 'spot-spot'],
         refetchInterval: 30000,
         queryFn: async ({signal}) => {
-            const {data, error} = await client.GET('/api/arbitrage/demo-spot/', {signal});
-            if (error) throw error;
+            const {data} = await arbClient.GET('/demo-spot', {signal});
             return data;
         },
     })
@@ -19,8 +18,7 @@ export function getDemoSpotSwap() {
         queryKey: ['demo', 'spot-swap'],
         refetchInterval: 30000,
         queryFn: async ({signal}) => {
-            const {data, error} = await client.GET('/api/arbitrage/demo-swap/', {signal});
-            if (error) throw error;
+            const {data} = await arbClient.GET('/demo-swap', {signal});
             return data;
         }
     })

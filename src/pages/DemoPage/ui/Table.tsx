@@ -1,7 +1,7 @@
 import {Box, Container, Tab, Tabs} from "@mui/material";
-import {ArbitrageTable} from "@widgets/ArbitrageTableDemo";
+import {ArbitrageTable} from "@widgets/ArbitrageTableFull";
 import {type SyntheticEvent, useState} from "react";
-import {getDemoSpotSpot, getDemoSpotSwap} from "../api/getDemo.ts";
+import {getDemoSpotSpot, getDemoSpotSwap} from "@features/arb/useDemo.ts";
 
 
 function a11yProps(index: number) {
@@ -37,10 +37,10 @@ export function Table() {
                 <Tab label="Спот - Фьючерс" {...a11yProps(1)} />
             </Tabs>
             <Box hidden={value !== 0} sx={{width: '100%'}}>
-                <ArbitrageTable data={spot.data} isFetching={spot.isFetching}/>
+                <ArbitrageTable data={spot.data?.data} isFetching={spot.isFetching}/>
             </Box>
             <Box hidden={value !== 1} sx={{width: '100%'}}>
-                <ArbitrageTable data={swap.data} isFetching={swap.isFetching}/>
+                <ArbitrageTable data={swap.data?.data} isFetching={swap.isFetching}/>
             </Box>
         </Container>
     )

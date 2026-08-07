@@ -7,14 +7,14 @@ import MenuItem from "@mui/material/MenuItem";
 type Props = {
     label: string,
     init?: string,
-    data: Array<string>,
+    data: Array<string> | undefined,
     onChange?: (v: string) => void,
 
 }
 
 export function SelectOne({label, data, onChange, init}: Props) {
     const id = useId()
-    const [value, setValue] = useState<string>(init || data?.[0] || '');
+    const [value, setValue] = useState<string>(init || '');
     const handleChange = (e: SelectChangeEvent) => {
         setValue(e.target.value)
         onChange?.(e.target.value)

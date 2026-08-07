@@ -1,7 +1,7 @@
 import {Avatar, Button, Box, Container, Stack, Typography, Divider} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import TimelineIcon from '@mui/icons-material/Timeline';
-import {StyledBox} from "@pages/MainPage/ui/StyledBox.tsx";
+import {StyledBox} from "@pages/main/ui/StyledBox.tsx";
 import {Link as RouterLink} from "@tanstack/react-router";
 import {pathDemo, pathSignUp} from "@shared/config.ts";
 import {Fragment} from "react";

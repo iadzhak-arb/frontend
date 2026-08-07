@@ -4,24 +4,7 @@
  */
 
 export interface paths {
-    "/api/users/registration": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Registration */
-        post: operations["registration_api_users_registration_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/users/login": {
+    "/login": {
         parameters: {
             query?: never;
             header?: never;
@@ -31,14 +14,31 @@ export interface paths {
         get?: never;
         put?: never;
         /** Login */
-        post: operations["login_api_users_login_post"];
+        post: operations["login_login_post"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/api/users/logout": {
+    "/registration": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Registration */
+        post: operations["registration_registration_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/logout": {
         parameters: {
             query?: never;
             header?: never;
@@ -48,22 +48,22 @@ export interface paths {
         get?: never;
         put?: never;
         /** Logout */
-        post: operations["logout_api_users_logout_post"];
+        post: operations["logout_logout_post"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/api/users/me": {
+    "/refresh": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** Me */
-        get: operations["me_api_users_me_get"];
+        /** Refresh */
+        get: operations["refresh_refresh_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -72,15 +72,15 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/users/refresh": {
+    "/user/me": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** Refresh */
-        get: operations["refresh_api_users_refresh_get"];
+        /** Me */
+        get: operations["me_user_me_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -93,31 +93,25 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        /** Body_login_api_users_login_post */
-        Body_login_api_users_login_post: {
-            /** Email */
-            email: string;
-            /** Password */
-            password: string;
-        };
         /** HTTPValidationError */
         HTTPValidationError: {
             /** Detail */
             detail?: components["schemas"]["ValidationError"][];
         };
-        /** UserIn */
-        UserIn: {
+        /** UserLogin */
+        UserLogin: {
             /**
              * Email
              * Format: email
              */
             email: string;
-            /** First Name */
-            first_name: string | null;
-            /** Last Name */
-            last_name: string | null;
             /** Password */
             password: string;
+            /**
+             * Remember
+             * @default false
+             */
+            remember: boolean;
         };
         /** UserPublic */
         UserPublic: {
@@ -126,12 +120,26 @@ export interface components {
              * Format: email
              */
             email: string;
-            /** First Name */
-            first_name: string | null;
-            /** Last Name */
-            last_name: string | null;
             /** Id */
             id: number;
+            /** First Name */
+            first_name: string;
+            /** Last Name */
+            last_name: string;
+        };
+        /** UserRegistration */
+        UserRegistration: {
+            /**
+             * Email
+             * Format: email
+             */
+            email: string;
+            /** First Name */
+            first_name: string;
+            /** Last Name */
+            last_name: string;
+            /** Password */
+            password: string;
         };
         /** ValidationError */
         ValidationError: {
@@ -155,7 +163,7 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
-    registration_api_users_registration_post: {
+    login_login_post: {
         parameters: {
             query?: never;
             header?: never;
@@ -164,40 +172,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["UserIn"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["UserPublic"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    login_api_users_login_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["Body_login_api_users_login_post"];
+                "application/json": components["schemas"]["UserLogin"];
             };
         };
         responses: {
@@ -221,7 +196,40 @@ export interface operations {
             };
         };
     };
-    logout_api_users_logout_post: {
+    registration_registration_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UserRegistration"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserPublic"] | null;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    logout_logout_post: {
         parameters: {
             query?: never;
             header?: never;
@@ -241,27 +249,7 @@ export interface operations {
             };
         };
     };
-    me_api_users_me_get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["UserPublic"];
-                };
-            };
-        };
-    };
-    refresh_api_users_refresh_get: {
+    refresh_refresh_get: {
         parameters: {
             query?: never;
             header?: never;
@@ -277,6 +265,26 @@ export interface operations {
                 };
                 content: {
                     "application/json": unknown;
+                };
+            };
+        };
+    };
+    me_user_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserPublic"] | null;
                 };
             };
         };

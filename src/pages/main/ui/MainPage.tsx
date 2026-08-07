@@ -2,9 +2,9 @@ import Divider from '@mui/material/Divider';
 import Hero from './Hero.tsx';
 import LogoCollection from './LogoCollection.tsx';
 import FAQ from './FAQ.tsx';
-import PricingFree from "@pages/MainPage/ui/PricingFree.tsx";
-import Highlights from "./Highlights.tsx";
-import {useActiveSection} from "@pages/MainPage/model/useActiveSection.ts";
+import PricingFree from "@pages/main/ui/PricingFree.tsx";
+import SummaryInfo from "./SummaryInfo.tsx";
+import {useActiveSection} from "@pages/main/model/useActiveSection.ts";
 
 const main = {
     id: 'main',
@@ -30,7 +30,7 @@ export function MainPage() {
             <Hero id={main.id}/>
             <div>
                 <LogoCollection/>
-                <Highlights/>
+                <SummaryInfo/>
                 <Divider/>
                 <PricingFree id={prices.id}/>
                 <Divider/>

@@ -7,7 +7,7 @@ import {Link as RouterLink} from "@tanstack/react-router"
 import IconButton from "@mui/material/IconButton";
 import SsidChartIcon from '@mui/icons-material/SsidChart';
 
-export function View({data, isFetching}: ArbitrageTableProps) {
+export function View({data, actions = false, isFetching}: ArbitrageTableProps) {
     return (
         <TableContainer>
             <Table>
@@ -17,7 +17,7 @@ export function View({data, isFetching}: ArbitrageTableProps) {
                         <TableCell>Продажа</TableCell>
                         <TableCell>Профит, %</TableCell>
                         <TableCell>Объем</TableCell>
-                        <TableCell></TableCell>
+                        {actions && <TableCell></TableCell>}
                         <TableCell>
                             Обновленно
                         </TableCell>
@@ -27,22 +27,43 @@ export function View({data, isFetching}: ArbitrageTableProps) {
                     {data ?
                         data.map((value, index) => (
                             <TableRow key={index} hover>
-                                <TableCell><RenderSide value={value.buy}/></TableCell>
-                                <TableCell><RenderSide value={value.sell}/></TableCell>
-                                <TableCell>{value.margin}</TableCell>
-                                <TableCell><RenderVolume symbol={value.buy.symbol} base={value.volume_base}
-                                                         quote={value.volume_quote}/></TableCell>
                                 <TableCell>
+                                    <RenderSide
+                                        symbol={value.buy_symbol_id}
+                                        exchange={value.buy_exchange_name}
+                                    />
+                                </TableCell>
+                                <TableCell>
+                                    <RenderSide
+                                        symbol={value.sell_symbol_id}
+                                        exchange={value.sell_exchange_name}
+                                    />
+                                </TableCell>
+                                <TableCell>{value.margin}</TableCell>
+                                <TableCell>
+                                    <RenderVolume
+                                        symbol={value.buy_symbol_id}
+                                        base={value.volume_base}
+                                        quote={value.volume_quote}/>
+                                </TableCell>
+                                {actions && <TableCell>
                                     <RouterLink
                                         to="/d/history"
-                                        search={{id: value.id}}
+                                        search={{
+                                            sell_exchange_name: value.sell_exchange_name,
+                                            buy_exchange_name: value.buy_exchange_name,
+                                            sell_symbol_id: value.sell_symbol_id,
+                                            buy_symbol_id: value.buy_symbol_id
+                                        }}
                                     >
                                         <IconButton size="small">
                                             <SsidChartIcon/>
                                         </IconButton>
                                     </RouterLink>
+                                </TableCell>}
+                                <TableCell align={actions ? "right" : "left"}>
+                                    <RenderTime value={value.timestamp}/>
                                 </TableCell>
-                                <TableCell><RenderTime value={new Date(value.timestamp)}/></TableCell>
                             </TableRow>
                         ))
                         :

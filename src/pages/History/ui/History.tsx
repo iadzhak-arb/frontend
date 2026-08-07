@@ -4,33 +4,49 @@ import {SearchArbitrage} from "./SearchArbitrage.tsx"
 import {ChartOpenClose} from "./ChartOpenClose.tsx"
 import {useHistory} from "../api/data.ts";
 import Chip from "@mui/material/Chip";
-import {useEffect} from "react";
-import {useSearch} from "@tanstack/react-router";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
+import {Skeleton} from "@mui/material";
+import {useSearch} from "@tanstack/react-router";
+import {useEffect} from "react";
+import Box from "@mui/material/Box";
 
 
-function formatDate(input: string) {
-    const d = new Date(input);
+function formatDate(input: number) {
+    const d = new Date(input * 1000);
     return Math.floor(d.getTime() / 1000);
 }
 
+
 function dataAdapter(data) {
-    return data.map(({timestamp, margin}) => ({time: formatDate(timestamp), value: margin}));
+    return data
+        .map(({timestamp, margin}) => ({time: formatDate(timestamp), value: margin}))
+        .sort((a, b) => a.time - b.time);
 }
 
 export function History() {
-    const params = useSearch({from: '/d/_layout/history'});
-    const {open, close, setId} = useHistory();
+    const intial = useSearch({from: '/d/_layout/history'});
+    const {data, params, setParams} = useHistory();
+
+    const open_label = `${params.buy_symbol_id} ${params.buy_exchange_name} ⇒ ${params.sell_symbol_id} ${params.sell_exchange_name}`
+    const close_label = `${params.sell_symbol_id} ${params.sell_exchange_name} ⇒ ${params.buy_symbol_id} ${params.buy_exchange_name}`
 
     useEffect(() => {
-        if (params.id) setId(params.id);
+        if (
+            intial.buy_exchange_name &&
+            intial.sell_exchange_name &&
+            intial.buy_symbol_id &&
+            intial.sell_symbol_id
+        ) setParams(intial)
     }, []);
 
-
-    const handleSetId = (v) => {
-        if (!v) return;
-        setId(v.id)
+    const handleChange = (v) => {
+        setParams({
+            buy_symbol_id: v.symbol_sell_id,
+            buy_exchange_name: v.exchange_buy_name,
+            sell_symbol_id: v.symbol_buy_id,
+            sell_exchange_name: v.exchange_sell_name
+        })
     }
 
     return (
@@ -41,28 +57,41 @@ export function History() {
                         Анализ истории
                     </Typography>
                     <Typography>
-                        На этой странице вы можете детально изучить историю сделок по конкретной арбитражной связке.
-                        После выбора связки отображаются графики маржи открытия и закрытия сделки.
+                        Арбитражная связка состоит из двух сделок. Назовем их открытие и закрытие. В каждой из сделок вы
+                        совершаете покупку и продажу.
                         <br/>
-                        <i>Порядок указания: покупка - продажа</i>
+                        Итоговый профит это сумма профита сделки открытия и профита сделки закрытия.
+                        <br/>
+                        На графике вы наглядно можете изучить когда было выгодно открывать, а когда выгодно закрывать
+                        сделки по арбитражной связке.
                     </Typography>
                     <Divider/>
                     <br/>
-                    <SearchArbitrage onChange={handleSetId}/>
+                    <SearchArbitrage onChange={handleChange}/>
                 </Stack>
             </Grid>
             <Grid size={12}>
-                <Stack direction={{sx: "column", md: "row"}} spacing={2}>
-                    <Chip label={open?.data?.name} color="info" sx={{mb: {xs: 1}}}/>
-                    <Chip label={close?.data?.name} color="error"/>
-                </Stack>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: {xs: 'column', md: 'row'},
+                        flexWrap: 'wrap',          // ← вот это включает перенос
+                        gap: 2,                    // аналог spacing у Stack
+                    }}
+                >
+                    <Chip label={open_label} color="info" sx={{mb: {xs: 1}}}/>
+                    <Chip label={close_label} color="error"/>
+                </Box>
             </Grid>
             <Grid size={12}>
-                {open && open.data && close && close.data &&
+                {data?.data &&
                     <ChartOpenClose
-                        open={dataAdapter(open.data.history)}
-                        close={dataAdapter(close.data.history)}
-                    />}
+                        open={dataAdapter(data?.data.open)}
+                        close={dataAdapter(data?.data.close)}
+                    />
+                    ||
+                    <Skeleton variant="rectangular" height={500}/>
+                }
             </Grid>
         </Grid>
     )

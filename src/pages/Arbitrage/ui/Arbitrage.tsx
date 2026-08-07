@@ -1,10 +1,10 @@
 import {Box, Grid, TablePagination} from "@mui/material";
 import type {ChangeEvent, MouseEvent} from "react";
-import {ArbitrageTable} from "@widgets/ArbitrageTable";
+import {ArbitrageTable} from "@widgets/ArbitrageTableFull";
 import {RefreshButton} from "@pages/Arbitrage/ui/RefreshButton.tsx";
 import {MarketSet} from "./MarketSet"
 import {CommonSet} from "./CommonSet.tsx";
-import {useArbitrage} from "../api/data.ts";
+import {useArbitrage} from "@features/arb/useArbitrage.ts";
 
 const rowsPerPageOptions = [5, 10, 25]
 
@@ -50,14 +50,14 @@ export function Arbitrage() {
                         onTokenChange={arb.setToken}
                         onMarginChange={arb.setMargin}
                         initMargin={[arb.params?.margin_min as number || 0, arb.params?.margin_max as number || 5]}
-                        initTokens={arb.params?.token ? arb.params.token.split(',') : []}
+                        initTokens={arb.params?.tokens ? arb.params.tokens.split(',') : []}
                     />
                 </Grid>
             </Grid>
             <Box sx={{width: '100%', display: 'flex', justifyContent: 'flex-end'}}>
                 <RefreshButton onChange={arb.setRefetch}/>
             </Box>
-            <ArbitrageTable data={arb.data?.results} isFetching={arb.isFetching}/>
+            <ArbitrageTable actions data={arb.data?.data} isFetching={arb.isFetching}/>
             <TablePagination
                 component="div"
                 count={arb.data?.count!}

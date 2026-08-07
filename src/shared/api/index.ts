@@ -1,2 +1,1 @@
-export {client} from './client.ts'
-export type {components, operations} from './schema.ts'
+export {authClient, arbClient} from './client.ts'

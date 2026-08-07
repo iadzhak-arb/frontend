@@ -1,5 +1,5 @@
-export const RenderTime = ({value}: { value: Date }) => {
-    const seconds = Math.floor((new Date().getTime() - value.getTime()) / 1000);
+export const RenderTime = ({value}: { value: number }) => {
+    const seconds = Math.floor((new Date().getTime() - new Date(value * 1000).getTime()) / 1000);
 
     if (seconds < 60) return `${seconds} сек.`;
     const minutes = Math.floor(seconds / 60);
