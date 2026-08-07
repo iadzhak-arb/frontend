@@ -2,7 +2,7 @@ import Typography from "@mui/material/Typography";
 import {SelectOne} from "@shared/ui";
 import {useExchanges} from "@features/arb/useExchanges.ts";
 import {useSearchArbitrage} from "@features/arb/useSearchArbitrage.ts";
-import {AutocompleteOne} from "@pages/History/ui/AutocompleteOne.tsx";
+import {AutocompleteOne} from "@pages/history/ui/AutocompleteOne.tsx";
 import Button from "@mui/material/Button";
 import {useState} from "react";
 

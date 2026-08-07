@@ -1,28 +1,11 @@
-import Grid from "@mui/material/Grid";
-import Stack from "@mui/material/Stack";
+import {Box, Chip, Divider, Grid, Skeleton, Stack, Typography} from "@mui/material";
 import {SearchArbitrage} from "./SearchArbitrage.tsx"
 import {ChartOpenClose} from "./ChartOpenClose.tsx"
-import {useHistory} from "../api/data.ts";
-import Chip from "@mui/material/Chip";
-import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
-import {Skeleton} from "@mui/material";
+import {useHistory} from "@features/arb/useHistory.ts";
 import {useSearch} from "@tanstack/react-router";
 import {useEffect} from "react";
-import Box from "@mui/material/Box";
+import {dataAdapter} from "../model/adapter.ts"
 
-
-function formatDate(input: number) {
-    const d = new Date(input * 1000);
-    return Math.floor(d.getTime() / 1000);
-}
-
-
-function dataAdapter(data) {
-    return data
-        .map(({timestamp, margin}) => ({time: formatDate(timestamp), value: margin}))
-        .sort((a, b) => a.time - b.time);
-}
 
 export function History() {
     const intial = useSearch({from: '/d/_layout/history'});
@@ -57,13 +40,16 @@ export function History() {
                         Анализ истории
                     </Typography>
                     <Typography>
-                        Арбитражная связка состоит из двух сделок. Назовем их открытие и закрытие. В каждой из сделок вы
-                        совершаете покупку и продажу.
-                        <br/>
-                        Итоговый профит это сумма профита сделки открытия и профита сделки закрытия.
-                        <br/>
-                        На графике вы наглядно можете изучить когда было выгодно открывать, а когда выгодно закрывать
-                        сделки по арбитражной связке.
+                        Арбитражная связка — это пара сделок: одна открывает позицию, другая её закрывает. В каждой из
+                        них вы одновременно что‑то покупаете и продаёте.
+                    </Typography>
+                    <Typography>
+                        Общий доход (профит) получается, если сложить прибыль от обеих сделок — и от открытия, и от
+                        закрытия.
+                    </Typography>
+                    <Typography>
+                        На графике удобно смотреть, в какие моменты было выгодно открывать сделку, а в какие —
+                        закрывать. Так проще понять, когда арбитражная связка работала лучше всего.
                     </Typography>
                     <Divider/>
                     <br/>

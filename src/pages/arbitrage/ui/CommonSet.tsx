@@ -1,6 +1,6 @@
 import {useTokens} from "@features/arb/useTokens";
 import {Accordion, AccordionSummary, AccordionDetails, Skeleton, Stack} from "@mui/material";
-import {AutocompleteMultiple} from "@pages/Arbitrage/ui/AutocompleteMultiple.tsx";
+import {AutocompleteMultiple} from "@pages/arbitrage/ui/AutocompleteMultiple.tsx";
 import {SliderMargin} from "./SliderMargin"
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import {useId} from "react";

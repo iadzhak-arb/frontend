@@ -1,7 +1,7 @@
 import {Box, Grid, TablePagination} from "@mui/material";
 import type {ChangeEvent, MouseEvent} from "react";
 import {ArbitrageTable} from "@widgets/ArbitrageTableFull";
-import {RefreshButton} from "@pages/Arbitrage/ui/RefreshButton.tsx";
+import {RefreshButton} from "@pages/arbitrage/ui/RefreshButton.tsx";
 import {MarketSet} from "./MarketSet"
 import {CommonSet} from "./CommonSet.tsx";
 import {useArbitrage} from "@features/arb/useArbitrage.ts";
