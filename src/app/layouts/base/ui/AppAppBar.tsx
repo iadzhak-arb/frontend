@@ -35,7 +35,7 @@ export default function AppAppBar() {
             <Container maxWidth="lg">
                 <StyledToolbar variant="dense" disableGutters>
                     <Box sx={{flexGrow: 1, display: 'flex', alignItems: 'center', px: 0}}>
-                        <SitemarkIcon/>
+                        <RouterLink to='/'><SitemarkIcon/></RouterLink>
                         <Box sx={{display: {xs: 'none', md: 'flex'}}}>
                             {menu.map((value) => (
                                 <Button
