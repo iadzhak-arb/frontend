@@ -2,9 +2,9 @@ import createClient, {type Middleware} from "openapi-fetch"
 import {type paths as authPaths} from "./schema-auth.ts"
 import {type paths as arbPaths} from "./schema-arb.ts"
 
-const baseUrl = 'http://localhost/';
-const authPrefix = 'api/auth';
-const arbPrefix = 'api/arb';
+const baseUrl = '';
+const authPrefix = '/api/auth';
+const arbPrefix = '/api/arb';
 
 let refreshTokenPromise: Promise<void> | null = null;
 

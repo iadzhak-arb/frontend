@@ -1,18 +1,12 @@
 import {useUser} from "@features/auth/useUser.ts";
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid";
-import FormControl from "@mui/material/FormControl";
-import Box from "@mui/material/Box";
-import FormLabel from "@mui/material/FormLabel";
-import {useHandlers} from "../model/handlers.ts";
+import {Stack, Typography, Container, TextField, Button, Grid, FormControl, Box, FormLabel} from "@mui/material";
+import {useHandleUserChange} from "@pages/profile/model/useHandleUserChange.ts";
+import {useHandlePasswordChange} from "@pages/profile/model/useHandlePasswordChange.ts";
 
 
 export function Profile() {
-    const {handleSubmitData, handleSubmitPassword, error} = useHandlers();
+    const changeUser = useHandleUserChange();
+    const changePassword = useHandlePasswordChange();
     const user = useUser();
 
     return (
@@ -21,7 +15,7 @@ export function Profile() {
             <Grid container spacing={7}>
                 <Grid size={12}>
                     <Typography variant="h6" sx={{mb: 3}}>Мои данные</Typography>
-                    <Stack spacing={2} component="form" onSubmit={handleSubmitData}>
+                    <Stack spacing={2} component="form" onSubmit={changeUser.handleUserChange}>
                         <FormControl>
                             <FormLabel htmlFor="email">Email</FormLabel>
                             <TextField
@@ -51,7 +45,7 @@ export function Profile() {
                 </Grid>
                 <Grid>
                     <Typography variant="h6" sx={{mb: 3}}>Сменить пароль</Typography>
-                    <Box component="form" onSubmit={handleSubmitPassword}
+                    <Box component="form" onSubmit={changePassword.handleChangePassword}
                          sx={{display: 'flex', flexDirection: 'column', gap: 2}}>
                         <FormControl>
                             <FormLabel htmlFor="new_password1">Новый пароль</FormLabel>
@@ -68,8 +62,8 @@ export function Profile() {
                                 type="password"
                                 id="new_password2"
                                 name="new_password2"
-                                error={!!error.new_password2}
-                                helperText={error.new_password2}
+                                error={!!changePassword.error}
+                                helperText={changePassword.error}
                             />
                         </FormControl>
                         <Button

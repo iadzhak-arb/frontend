@@ -11,7 +11,7 @@ import IconButton from "@mui/material/IconButton";
 import SsidChartIcon from "@mui/icons-material/SsidChart";
 import {Link as RouterLink} from "@tanstack/react-router";
 
-export function MobileView({data}: ArbitrageTableProps) {
+export function MobileView({data, actions = false}: ArbitrageTableProps) {
     return (
         <>
             {data ?
@@ -30,7 +30,7 @@ export function MobileView({data}: ArbitrageTableProps) {
                             <Stack direction="row" spacing={2} sx={{
                                 justifyContent: "space-between"
                             }}>
-                                <Stack spacing={2} sx={{maxWidth: 100}}>
+                                <Stack spacing={2} sx={{maxWidth: 150}}>
                                     <Stack direction="row">
                                         <ArrowDropUpIcon fontSize="small" opacity={0.5} color="success"/>
                                         <RenderSide
@@ -56,7 +56,7 @@ export function MobileView({data}: ArbitrageTableProps) {
                                             buy_symbol_id: item.buy_symbol_id
                                         }}
                                     >
-                                        <IconButton
+                                        {actions && <IconButton
                                             color="error"
                                             size="small"
                                             sx={{
@@ -66,7 +66,7 @@ export function MobileView({data}: ArbitrageTableProps) {
                                             }}
                                         >
                                             <SsidChartIcon/>
-                                        </IconButton>
+                                        </IconButton>}
                                     </RouterLink>
                                 </Stack>
                                 <Stack sx={{alignItems: "flex-end"}}>

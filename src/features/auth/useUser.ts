@@ -1,5 +1,6 @@
-import {useQuery, useQueryClient} from "@tanstack/react-query";
+import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import {authClient} from "@shared/api";
+import {type components} from "@shared/api/schema-auth.ts";
 
 export function useUser() {
     const queryClient = useQueryClient();
@@ -21,4 +22,16 @@ export function useUser() {
         },
         retry: false
     });
+}
+
+type UserChange = components['schemas']['UserUpdate']
+
+export function useUserChange() {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: async (data: UserChange) => {
+            return await authClient.PUT('/user/me', {body: data});
+        },
+        onSuccess: () => queryClient.refetchQueries({queryKey: ['user']})
+    })
 }
