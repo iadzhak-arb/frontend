@@ -1,7 +1,11 @@
-FROM node:24-alpine
+FROM node:24-alpine AS build
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
-COPY . ./
+COPY . .
 RUN npm run build
-CMD cp -r dist result_build
+
+FROM nginx:alpine
+
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /app/dist /usr/share/nginx/html

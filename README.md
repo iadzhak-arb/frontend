@@ -1,18 +1,25 @@
 # Frontend service
+
+[![CI/CD Pipline](https://github.com/iadzhak-arb/frontend/actions/workflows/main.yml/badge.svg)](https://github.com/iadzhak-arb/frontend/actions)
 > Является частью платформы [Arb Scanner](https://github.com/iadzhak-arb)
 
 React + TypeScript веб-приложение для отслеживания арбитражных возможностей на криптовалютных биржах.
 
+## CI/CD
+
+При каждом `push` и `pull_request` в ветку `main` GitHub Actions запускает пайплайн:
+
+- **Сборка и публикация Docker-образа:** успешный пайплайн публикует образ в Docker
+  Hub [iadzhak/arb-frontend](https://hub.docker.com/repository/docker/iadzhak/arb-frontend)
 
 ## Навигация
+
 - [Стек технологий](#стек-технологий)
 - [Возможности](#возможности)
 - [Структура проекта](#структура-проекта)
 - [Быстрый старт](#быстрый-старт)
 - [Доступные страницы](#доступные-страницы)
 - [API и генерация типов](#api-и-генерация-типов)
-
-
 
 ## Стек технологий
 
@@ -25,7 +32,6 @@ React + TypeScript веб-приложение для отслеживания �
 - **Lightweight Charts** — графики цен
 - **openapi-fetch** — HTTP-клиент, сгенерированный из OpenAPI
 
-
 ## Возможности
 
 - **Отслеживание арбитража** — таблица арбитражных возможностей в реальном времени
@@ -37,10 +43,10 @@ React + TypeScript веб-приложение для отслеживания �
 - **Алиасы импортов** — удобная навигация по проекту (`@pages`, `@shared`, `@widgets`)
 - **Production-сборка** — оптимизированная сборка через Vite
 
-
 ## Структура проекта
 
 Используется FSD архитектурная методология.
+
 ```
 src/
 ├── main.tsx           # Точка входа
@@ -69,18 +75,19 @@ src/
     └── ArbitrageTableDemo/   # Демо-таблица
 ```
 
-
 ## Быстрый старт
 
 ### 1. Установка
 
 Копировать репозиторий
+
 ```bash
 git clone https://github.com/iadzhak-arb/frontend.git
 cd frontend
 ```
 
 Настроить окружение
+
 ```bash
 # Установите зависимости
 npm install
@@ -91,11 +98,10 @@ npm install
 > Перед запуском необходим запущенный бэкенд.
 
 Dev-сервер
+
 ```bash
 npm run dev
 ```
-
-
 
 ## Доступные страницы
 
@@ -109,18 +115,19 @@ npm run dev
 | Вход        | `/signin`    | Авторизация пользователя          |
 | Регистрация | `/signup`    | Создание аккаунта                 |
 
-
 ## API и генерация типов
 
 Проект использует **OpenAPI** для генерации TypeScript-типов и HTTP-клиента.
 
 Генерация API-клиентов
+
 ```bash
 npm run api-auth  # http://localhost/api/auth/openapi.json
 npm run api-arb  # http://localhost/api/arb/openapi.json
 ```
 
-Эти команды скачивают схему OpenAPI с бэкенда и генерирует типизированные клиенты `src/shared/api/schema-auth.ts` и `src/shared/api/schema-arb.ts`.
+Эти команды скачивают схему OpenAPI с бэкенда и генерирует типизированные клиенты `src/shared/api/schema-auth.ts` и
+`src/shared/api/schema-arb.ts`.
 
 > **Важно:** Бэкенд должен быть запущен для генерации API-клиента.
 
