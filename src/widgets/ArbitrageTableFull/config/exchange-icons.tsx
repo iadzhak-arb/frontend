@@ -1,12 +1,17 @@
 import {type ReactNode} from "react";
-import bybitIcon from "@shared/assets/icons/bybit.png"
-import mexcIcon from "@shared/assets/icons/mexc.png"
+import bybitIcon from "@shared/assets/icons/bybit.png";
+import mexcIcon from "@shared/assets/icons/mexc.png";
+import gateIcon from "@shared//assets/icons/gateio.ico";
+import kucoinIcon from "@shared/assets/icons/kucoin.png";
 import PublicIcon from '@mui/icons-material/Public';
 
 
 const iconMap = new Map<string, string>([
     ["Bybit", bybitIcon],
-    ["MEXC Global", mexcIcon]
+    ["MEXC Global", mexcIcon],
+    ["Gate", gateIcon],
+    ["KuCoin", kucoinIcon],
+    ["KuCoin Futures", kucoinIcon]
 ]);
 
 
