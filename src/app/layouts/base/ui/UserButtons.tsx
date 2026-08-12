@@ -1,4 +1,4 @@
-import {useLogout} from "@features/user/auth.ts";
+import {useLogout} from "@features/auth/useLogout.ts";
 import {pathDashboard, pathSignIn, pathSignUp} from "@shared/config.ts";
 import {Button, type ButtonProps} from "@mui/material";
 import {Link as RouterLink} from "@tanstack/react-router";

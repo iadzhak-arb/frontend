@@ -5,7 +5,7 @@ import AppNavbar from './AppNavbar.tsx';
 import Header from './Header.tsx';
 import SideMenu from './SideMenu.tsx';
 import {Outlet, useNavigate} from "@tanstack/react-router";
-import {useUser} from "@features/user/auth.ts";
+import {useUser} from "@features/auth/useUser.ts";
 
 
 export function DashboardLayout() {
@@ -13,7 +13,7 @@ export function DashboardLayout() {
     const navigate = useNavigate();
 
     // Пока идет загрузка, показываем null или спиннер
-    if (user.isLoading) {
+    if (user.isFetching) {
         return null; // или <div>Загрузка...</div>
     }
 

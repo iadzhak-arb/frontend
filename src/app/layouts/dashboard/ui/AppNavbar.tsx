@@ -11,6 +11,7 @@ import SideMenuMobile from './SideMenuMobile.tsx';
 import MenuButton from './MenuButton.tsx';
 import {ColorModeIconDropdown} from '@shared/theme';
 import {SitemarkIcon} from "@shared/ui";
+import {Link as RouterLink} from "@tanstack/react-router"
 
 const Toolbar = styled(MuiToolbar)({
     width: '100%',
@@ -63,7 +64,7 @@ export default function AppNavbar() {
                         spacing={1}
                         sx={{justifyContent: 'center', mr: 'auto'}}
                     >
-                        <SitemarkIcon/>
+                        <RouterLink to="/"><SitemarkIcon/></RouterLink>
                     </Stack>
                     <ColorModeIconDropdown/>
                     <MenuButton aria-label="menu" onClick={toggleDrawer(true)}>

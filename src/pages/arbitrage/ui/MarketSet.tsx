@@ -1,0 +1,41 @@
+import {Accordion, AccordionSummary, AccordionDetails, Stack, Skeleton} from "@mui/material";
+import {SelectOne} from "@shared/ui";
+import {useMarkets} from "@features/arb/useMarkets";
+import {SelectMultiple} from "@shared/ui/SelectMultiple.tsx";
+import {useId} from "react";
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import {useExchanges} from "@features/arb/useExchanges.ts";
+
+type Props = {
+    name: string;
+    onMarketChange?: (v: string) => void;
+    onExchangeChange?: (v: string[]) => void;
+    initMarket?: string;
+    initExchanges?: string[];
+}
+
+export function MarketSet({name, onMarketChange, onExchangeChange, initMarket, initExchanges}: Props) {
+    const markets = useMarkets();
+    const exchanges = useExchanges();
+    const id = useId();
+    return (
+        <Accordion defaultExpanded>
+            <AccordionSummary id={id}>
+                <Stack direction="row" spacing={1} sx={{alignItems: "center"}}>
+                    <FilterAltIcon fontSize="small" color="info"/>
+                    <b>{name}</b>
+                </Stack>
+            </AccordionSummary>
+            <AccordionDetails sx={{mt: 2}}>
+                <Stack spacing={2}>
+                    {markets.isLoading ? <Skeleton/> :
+                        <SelectOne label='Рынок' data={markets.data!} onChange={onMarketChange} init={initMarket}/>}
+                    {exchanges.isLoading ? <Skeleton/> :
+                        <SelectMultiple label='Биржи' data={exchanges.data!} onChange={onExchangeChange}
+                                        init={initExchanges}/>}
+
+                </Stack>
+            </AccordionDetails>
+        </Accordion>
+    )
+}

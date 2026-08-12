@@ -10,7 +10,7 @@ import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import ForgotPassword from './ForgotPassword.tsx';
-import {useLogin} from "@features/user/auth.ts";
+import {useLogin} from "@features/auth/useLogin.ts";
 import {Link as RouterLink} from "@tanstack/react-router";
 
 
@@ -40,13 +40,11 @@ export function SignIn() {
         mutate({
             email: data.get('email') as string,
             password: data.get('password') as string,
+            remember: !!data.get('remember') as boolean
         }, {
-            onSuccess: () => {
-                // navigate уже внутри useLogin
-            },
             onError: (error: any) => {
                 // Обработка ошибок логина
-                const errorMessage = error?.response?.data?.non_field_errors || 'Некорректные данные';
+                const errorMessage = error?.data?.detail || 'Ошибка входаы';
                 setError(errorMessage);
             }
         })
@@ -137,7 +135,10 @@ export function SignIn() {
                 </FormControl>
                 {error && <Typography variant="caption" color="error">{error}</Typography>}
                 <FormControlLabel
-                    control={<Checkbox value="remember" color="primary"/>}
+                    control={<Checkbox value="remember" color="primary"
+                    />}
+                    id="remember"
+                    name="remember"
                     label="Запомнить"
                 />
                 <ForgotPassword open={open} handleClose={handleClose}/>

@@ -7,8 +7,9 @@ import {SitemarkIcon} from "@shared/ui";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import OptionsMenu from "./OptionsMenu.tsx";
-import {useUser} from "@features/user/auth.ts";
+import {useUser} from "@features/auth/useUser.ts";
 import PersonIcon from '@mui/icons-material/Person';
+import {Link as RouterLink} from "@tanstack/react-router";
 
 const drawerWidth = 240;
 
@@ -43,7 +44,7 @@ export default function SideMenu() {
                     p: 2.5,
                 }}
             >
-                <SitemarkIcon/>
+                <RouterLink to="/"><SitemarkIcon/></RouterLink>
             </Box>
             <Divider/>
             <Box

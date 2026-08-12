@@ -4,7 +4,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import {ColorModeIconDropdown} from '@shared/theme'
 import {SitemarkIcon} from '@shared/ui';
-import {useUser} from "@features/user/auth.ts";
+import {useUser} from "@features/auth/useUser.ts";
 import {menu} from "@shared/config.ts"
 import {useState} from "react";
 import {ButtonDashboard, ButtonLogout, ButtonSignIn, ButtonSignUp} from "./UserButtons.tsx";
@@ -35,7 +35,7 @@ export default function AppAppBar() {
             <Container maxWidth="lg">
                 <StyledToolbar variant="dense" disableGutters>
                     <Box sx={{flexGrow: 1, display: 'flex', alignItems: 'center', px: 0}}>
-                        <SitemarkIcon/>
+                        <RouterLink to='/'><SitemarkIcon/></RouterLink>
                         <Box sx={{display: {xs: 'none', md: 'flex'}}}>
                             {menu.map((value) => (
                                 <Button
@@ -72,7 +72,7 @@ export default function AppAppBar() {
                         {
                             user.data &&
                             <>
-                                <Typography variant="caption" color="textDisabled">{user.data.email}</Typography>
+                                <Typography variant="caption" color="textDisabled">{user.data?.email}</Typography>
                                 <ButtonLogout/>
                                 <ButtonDashboard/>
                             </>
