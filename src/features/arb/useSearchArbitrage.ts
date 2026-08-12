@@ -3,7 +3,7 @@ import {type operations} from "@shared/api/schema-arb.ts";
 import {useQuery} from "@tanstack/react-query";
 import {useState} from "react";
 
-type Params = operations['serach_symbols_search_get']['parameters']['query']
+type Params = operations['search_symbols_search_get']['parameters']['query']
 
 export function useSearchArbitrage() {
     const [params, setParams] = useState<Params>({})

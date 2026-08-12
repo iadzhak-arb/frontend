@@ -8,7 +8,7 @@ import {dataAdapter} from "../model/adapter.ts"
 
 
 export function History() {
-    const intial = useSearch({from: '/d/_layout/history'});
+    const initial = useSearch({from: '/d/_layout/history'});
     const {data, params, setParams} = useHistory();
 
     const open_label = `${params.buy_symbol_id} ${params.buy_exchange_name} ⇒ ${params.sell_symbol_id} ${params.sell_exchange_name}`
@@ -16,11 +16,16 @@ export function History() {
 
     useEffect(() => {
         if (
-            intial.buy_exchange_name &&
-            intial.sell_exchange_name &&
-            intial.buy_symbol_id &&
-            intial.sell_symbol_id
-        ) setParams(intial)
+            initial.buy_exchange_name &&
+            initial.sell_exchange_name &&
+            initial.buy_symbol_id &&
+            initial.sell_symbol_id
+        ) setParams({
+            buy_exchange_name: initial.buy_exchange_name as string,
+            sell_exchange_name: initial.sell_exchange_name as string,
+            buy_symbol_id: initial.buy_symbol_id as string,
+            sell_symbol_id: initial.sell_symbol_id as string,
+        })
     }, []);
 
     const handleChange = (v) => {
