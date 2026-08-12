@@ -7,7 +7,7 @@ React + TypeScript веб-приложение для отслеживания �
 
 ## CI/CD
 
-При каждом `push` и `pull_request` в ветку `main` GitHub Actions запускает пайплайн:
+При каждом `push` в ветку `main` GitHub Actions запускает пайплайн:
 
 - **Сборка и публикация Docker-образа:** успешный пайплайн публикует образ в Docker
   Hub [iadzhak/arb-frontend](https://hub.docker.com/repository/docker/iadzhak/arb-frontend)
