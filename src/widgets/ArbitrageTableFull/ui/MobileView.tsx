@@ -18,14 +18,17 @@ export function MobileView({data, actions = false}: ArbitrageTableProps) {
                 data.map((item, index) => (
                     <Card
                         key={index}
-                        sx={{
+                        sx={(theme) => ({
                             mt: 2, pl: 0.5, width: "100%",
-                            background: (theme) => `linear-gradient(
-                                                    180deg,
-                                                    ${theme.palette.background.paper} 85%,
-                                                    ${theme.palette.primary.light} 150%
-                                                    )`,
-                        }}>
+                            background:
+                                `linear-gradient(
+                                 180deg,
+                                 ${theme.palette.background.paper} 85%,
+                                 ${theme.palette.primary.light} 150%)`,
+                            ...theme.applyStyles('dark', {
+                                background: 'radial-gradient(ellipse 80% 50% at 50% -20%, hsl(210, 100%, 16%), transparent)'
+                            })
+                        })}>
                         <CardContent>
                             <Stack direction="row" spacing={2} sx={{
                                 justifyContent: "space-between"
