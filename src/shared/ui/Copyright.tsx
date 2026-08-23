@@ -11,7 +11,7 @@ export function Copyright() {
                     color: 'text.secondary',
                 }}
             >
-                Sitemark&nbsp;
+                ArbCrypto&nbsp;
             </Link>
             {new Date().getFullYear()}
         </Typography>
