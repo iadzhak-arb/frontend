@@ -5,12 +5,12 @@ import {useLocation} from "@tanstack/react-router";
 export function useYandexHit() {
     const metricaId = getMetricaID();
     const location = useLocation();
-
+    const fullUrl = `${location.pathname}${location.searchStr || ''}`;
     useEffect(() => {
-        const fullUrl = `${location.pathname}${location.searchStr || ''}`;
+
 
         if ((window as any).ym) {
             (window as any).ym(metricaId, 'hit', fullUrl);
         }
-    }, [location]);
+    }, [fullUrl]);
 }
