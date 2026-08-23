@@ -1,47 +1,63 @@
 import {Link, Snackbar, Stack, Typography} from '@mui/material';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {StyledButton} from "./StyledButton.tsx";
+import Divider from "@mui/material/Divider";
 
 
+const message = (
 
+    <Stack
+        direction="column"
+        sx={{maxWidth: {xs: '50vw', sm: 'auto'}}}
+    >
+        <b>Мы используем cookies</b>
+        <Typography variant="caption">
+            Яндекс.Метрика для аналитики трафика
+        </Typography>
+        <Link
+            href='#'
+            variant="caption"
+            sx={(theme) => ({
+                color: theme.palette.warning.main
+            })}
+        >
+            Политика cookies.
+        </Link>
+    </Stack>
+);
 
-export function UserAgree() {
-    const [open, setOpen] = useState(true);
+type Props = {
+    agree: boolean | undefined;
+    changeAgree: (v: boolean) => void;
+}
 
-    const handleAccept = () => console.log("Acepted!");
-    const handleRefuse = () => console.log("Refused!");
+export function UserAgree({agree, changeAgree}: Props) {
+    const [open, setOpen] = useState(agree == undefined);
 
-    const message = (
-        <>
-            <Stack direction="row" spacing={2}>
-                <Stack direction="column">
-                    <b>Мы используем cookies</b>
-                    <Typography variant="caption">
-                        Яндекс.Метрика — аналитика трафика.&nbsp;
-                        <Link
-                            href='#'
-                            sx={(theme)=>({
-                                color: theme.palette.primary.main
-                            })}
-                        >
-                            Политика cookies.
-                        </Link>
-                    </Typography>
-                </Stack>
-                <StyledButton
-                    size="small"
-                    onClick={handleAccept}
-                >
-                    Принять
-                </StyledButton>
-                <StyledButton
-                    size="small"
-                    onClick={handleRefuse}
-                >
-                    Отклонить
-                </StyledButton>
-            </Stack>
-        </>
+    useEffect(() => {
+        if (agree == undefined) return;
+        setOpen(false);
+    }, [agree])
+
+    const handleAccept = () => changeAgree(true);
+    const handleRefuse = () => changeAgree(false);
+
+    const action = (
+        <Stack direction={{xs: "column", md: "row"}} spacing={1}>
+            <StyledButton
+                size="small"
+                onClick={handleRefuse}
+            >
+                Отклонить
+            </StyledButton>
+            <StyledButton
+                size="small"
+                onClick={handleAccept}
+            >
+                Принять
+            </StyledButton>
+            <Divider sx={{display: {xs: 'none', md: 'block'}}}/>
+        </Stack>
     )
 
     return (
@@ -49,6 +65,7 @@ export function UserAgree() {
             open={open}
             anchorOrigin={{vertical: 'bottom', horizontal: 'center'}}
             message={message}
+            action={action}
         />
     )
 }

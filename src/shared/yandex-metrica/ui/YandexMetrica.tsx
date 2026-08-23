@@ -1,12 +1,17 @@
 import {getMetricaID} from "../model/getMetricaID.ts";
-import {useEffect} from "react";
+import {useEffect, useRef} from "react";
 
 
-export function YandexMetrica() {
+export function YandexMetrica({agree}: { agree: boolean | undefined }) {
     const metricaID = getMetricaID();
+    const initialized = useRef(false);
 
     useEffect(() => {
+        console.log('agree:', agree, 'metricaID:', metricaID, 'initialized:', initialized.current);
+        if (agree !== true) return;
         if (!metricaID) return;
+        if (initialized.current) return;
+        initialized.current = true;
 
         const script = document.createElement('script');
         script.type = 'text/javascript';
@@ -22,7 +27,8 @@ export function YandexMetrica() {
                 defer: true,
                 clickmap:true,
                 trackLinks:true,
-                accurateTrackBounce:true
+                accurateTrackBounce:true,
+                webvisor:true
             });
         `
         document.head.appendChild(script);
@@ -38,7 +44,7 @@ export function YandexMetrica() {
         return () => {
         };
 
-    }, [metricaID]);
+    }, [metricaID, agree]);
 
     return null;
 }
