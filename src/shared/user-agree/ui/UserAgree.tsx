@@ -2,7 +2,7 @@ import {Link, Snackbar, Stack, Typography} from '@mui/material';
 import {useEffect, useState} from "react";
 import {StyledButton} from "./StyledButton.tsx";
 import Divider from "@mui/material/Divider";
-
+import {docsPath} from '@shared/config.ts';
 
 const message = (
 
@@ -15,7 +15,8 @@ const message = (
             Яндекс.Метрика для аналитики трафика
         </Typography>
         <Link
-            href='#'
+            href={docsPath.cookies}
+            target="_blank"
             variant="caption"
             sx={(theme) => ({
                 color: theme.palette.warning.main
