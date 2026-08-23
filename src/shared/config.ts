@@ -35,7 +35,7 @@ export const info = [
     },
 ];
 export const docsPath = {
-    cookies: '/cookies',
+    cookies: '/docs/cookies.pdf',
     privacy: '#',
     rules: '#',
 }
