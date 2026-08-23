@@ -5,7 +5,7 @@ import {useSummary} from "@features/arb/useSummary.ts";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
-import {ListItemAvatar} from "@mui/material";
+import {CircularProgress, ListItemAvatar} from "@mui/material";
 import Divider from "@mui/material/Divider";
 import DataSaverOffRoundedIcon from '@mui/icons-material/DataSaverOffRounded';
 
@@ -13,7 +13,8 @@ const StatListItem = ({value, title, text}: { value: number, title: string, text
     <ListItem sx={{display: {xs: 'block', sm: 'flex'}}}>
         <ListItemAvatar sx={{width: '25%'}}>
             <Typography variant="h1" align="right" sx={{mr: 6}}>
-                <b>{value}</b>
+                {value && <b>{value}</b>}
+                {!value && <CircularProgress color="inherit" aria-label="Загрузка…"/>}
             </Typography>
         </ListItemAvatar>
         <ListItemText
