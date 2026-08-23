@@ -1,8 +1,5 @@
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
-import Copyright from './Copyright';
+import {Grid, Box, Stack, Typography} from '@mui/material';
+import {Copyright} from '@shared/ui';
 
 
 const data = [
@@ -83,7 +80,7 @@ export default function MainGrid() {
                     </Stack>
                 </Grid>
             </Grid>
-            <Copyright sx={{my: 4}}/>
+            <Copyright/>
         </Box>
     );
 }
