@@ -8,7 +8,7 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import {SitemarkIcon} from '@shared/ui';
 import {Link as RouterLink} from "@tanstack/react-router";
 import {Copyright} from "@shared/ui";
-import {info, menu, pathGtiHub} from "@shared/config.ts";
+import {info, menu, pathGtiHub, docsPath} from "@shared/config.ts";
 
 
 export default function Footer() {
@@ -112,7 +112,21 @@ export default function Footer() {
                 <div>
                     <Link
                         variant="body2"
-                        href="#"
+                        href={docsPath.cookies}
+                        target="_blank"
+                        sx={{
+                            color: 'text.secondary',
+                        }}
+                    >
+                        Политика cookies
+                    </Link>
+                    <Typography sx={{display: 'inline', mx: 0.5, opacity: 0.5}}>
+                        &nbsp;•&nbsp;
+                    </Typography>
+                    <Link
+                        variant="body2"
+                        href={docsPath.privacy}
+                        target="_blank"
                         sx={{
                             color: 'text.secondary',
                         }}
@@ -124,7 +138,8 @@ export default function Footer() {
                     </Typography>
                     <Link
                         variant="body2"
-                        href="#"
+                        href={docsPath.rules}
+                        target="_blank"
                         sx={{
                             color: 'text.secondary',
                         }}

@@ -7,8 +7,6 @@ export function useYandexHit() {
     const location = useLocation();
     const fullUrl = `${location.pathname}${location.searchStr || ''}`;
     useEffect(() => {
-
-
         if ((window as any).ym) {
             (window as any).ym(metricaId, 'hit', fullUrl);
         }

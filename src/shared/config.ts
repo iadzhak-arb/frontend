@@ -34,5 +34,10 @@ export const info = [
         path: '',
     },
 ];
+export const docsPath = {
+    cookies: '/cookies',
+    privacy: '#',
+    rules: '#',
+}
 
 export const pathGtiHub = 'https://github.com/iadzhak-arb';
